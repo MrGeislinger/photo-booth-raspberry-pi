@@ -1,7 +1,7 @@
 import RPi.GPIO as GPIO
 import time
 #
-import camera
+import camera as cam
 
 # blinking function
 def blink(pin):
@@ -92,8 +92,8 @@ count = 0
 print("Press CTRL+C to exit")
 
 #Start camera with given resolution and begin a preview window
-camera = camera.startCamera(1024, 768)
-camera.startPreview
+camera = cam.startCamera(1024, 768)
+cam.startPreview
 
 try:
     while True:
@@ -108,7 +108,7 @@ try:
             countdownFrom(3)
             buzzerOn()
             time.sleep(0.2)
-            count = camera.takePicture(count)
+            count = cam.takePicture(count)
             buzzerOff()
 except KeyboardInterrupt: # If CTRL+C is pressed, exit cleanly:
     GPIO.cleanup() # cleanup all GPIO
