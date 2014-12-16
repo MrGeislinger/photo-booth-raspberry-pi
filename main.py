@@ -64,6 +64,13 @@ def countdownFrom(num,to=0,flashTime=1):
         flashNum(num,flashTime)
         num -= 1 # decrease the next number to show
 
+#Similar to countdown, but instead prints countdown as overlay
+def cameraCountdownFrom(cam,num,to=0,flashTime=1):
+    while num >= to:
+        flashNum(num,flashTime)
+        cam.annotate_text = '%d' %num
+        num -= 1 #decrease the next number to show
+    cam.annotate_text = '' #remove the text annotation overlay
 
 #Press down button
 butPin = 12 # Broadcom pin 18 (P1 pin 12)
