@@ -40,3 +40,13 @@ def startPreview(camera):
 			break
 	#Destroy windows
 	cv2.dstroyAllWindows()
+
+#TEST window preview
+def startPreviewTest(camera):
+	cv2.NamedWindow('window', cv2.CV_WINDOW_AUTOSIZE)
+	capture = cv2.CaptureFromCAM(0)
+	while(True):
+		frame = cv2.QueryFrame(capture)
+		cv2.ShowImage('window',frame)
+		
+
