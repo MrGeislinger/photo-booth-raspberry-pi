@@ -8,6 +8,14 @@ import cv2
 def startCamera(resX, resY, vflip=False, hflip=False, camNum=0):
 	#Get the video for the given camera
 	camera = cv2.VideoCapture(camNum)
+	#Set the resolutions
+	camera.set(CV_CAP_PROP_FRAME_WIDTH, resX)
+	camera.set(CV_CAP_PROP_FRAME_HEIGHT, resY)
+	return camera
+
+#Set the video frame
+def setFPS(camera, fps):
+	camera.set(CV_CAP_PROP_FRAME_WIDTH, fps)
 	return camera
 
 #Releasing the camera once done
