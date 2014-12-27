@@ -1,4 +1,5 @@
 import RPi.GPIO as GPIO
+import time
 
 #Global variables
 buttonLED = {'BCM':None, 'BOARD':None} #pin number for each mode
@@ -21,4 +22,13 @@ def buttonLED(on):
 	#Returns that the power has been switched
 	return not on
 
-#
+#Flash button LED for a certain amount of time
+def flashButton(secs,waitOn=1,waitOff=1):
+	i = 0
+	while(i<=secs):
+		buttonLED(True)
+		time.sleep(waitOn)
+		i += waitOn
+		buttonLED(False)
+		time.sleep(waitOff)
+		i += waitOff
