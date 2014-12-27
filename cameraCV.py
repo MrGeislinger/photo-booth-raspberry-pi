@@ -13,9 +13,15 @@ def startCamera(resX, resY, vflip=False, hflip=False, camNum=0):
 	camera.set(cv2.cv.CV_CAP_PROP_FRAME_HEIGHT, resY)
 	return camera
 
-#Set the video frame
+#Set the video resolution
+def setRes(camera, resX, resY):
+	camera.set(cv2.cv.CV_CAP_PROP_FRAME_WIDTH, resX)
+	camera.set(cv2.cv.CV_CAP_PROP_FRAME_HEIGHT, resY)
+	return camera
+
+#Set the video frame rate
 def setFPS(camera, fps):
-	camera.set(cv2.cv.CV_CAP_PROP_FRAME_WIDTH, fps)
+	camera.set(cv2.cv.CV_CAP_PROP_FPS, fps)
 	return camera
 
 #Releasing the camera once done
