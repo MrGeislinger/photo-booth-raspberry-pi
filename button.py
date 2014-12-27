@@ -1,7 +1,16 @@
 import RPi.GPIO as GPIO
 
 #Global variables
-buttonLED = 0 #pin number for button's LED
+buttonLED = {'BCM':0, 'BOARD':0} #pin number for each mode
+
+#Set button LED pin number
+def setButtonLED(mode,pin):
+	#Check the mode given is valid
+	if mode in buttonLED.keys():
+		buttonLED[mode] = pin
+		return True
+	else:
+		return False
 
 #Switch LED on or off (True or False respectively passed in)
 def buttonLED(on):
@@ -11,3 +20,4 @@ def buttonLED(on):
 		GPIO.output(buttonLED,GPIO.LOW)
 	return not on
 
+#
