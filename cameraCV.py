@@ -2,24 +2,33 @@
 import numpy as np
 import cv2
 
+
+
 #Input capture from camera
-video = cv2.VideoCapture(0)
+def startCamera(resX, resY, vflip=False, hflip=False, camNum=0):
+	#Get the video for the given camera
+	camera = cv2.VideoCapture(camNum)
+	return camera
 
-#Display video
-while(True):
-	#Frame-by-frame capture
-	_ , frame = video.read()
+#Releasing the camera once done
+def releaseCamera(camera):
+	camera.release()
 
-	#Frame operations
-	gray = cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
+#To start a window preview
+def startPreview(camera):
+	#Display video
+	while(True):
+		#Frame-by-frame capture
+		_ , frame = camera.read()
 
-	#Dispaly the frame\
-	cv2.imshow('frame',gray)
+		#Frame operations
+		gray = cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
 
-	#To quit, press 'q'
-	if cv2.waitKey(1) & 0xFF == ord('q'):
-		break
+		#Dispaly the frame\
+		cv2.imshow('frame',gray)
 
-#Release the video capture
-video.release()
-cv2.dstroyAllWindows()
+		#To quit, press 'q'
+		if cv2.waitKey(1) & 0xFF == ord('q'):
+			break
+	#Destroy windows
+	cv2.dstroyAllWindows()
