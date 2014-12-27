@@ -43,10 +43,11 @@ def startPreview(camera):
 
 #TEST window preview
 def startPreviewTest(camera):
-	cv2.NamedWindow('window', cv2.CV_WINDOW_AUTOSIZE)
-	capture = cv2.CaptureFromCAM(0)
+	import cv
+	cv.NamedWindow('window', cv2.cv.CV_WINDOW_AUTOSIZE)
+	capture = cv.CaptureFromCAM(0)
 	while(True):
-		frame = cv2.QueryFrame(capture)
-		cv2.ShowImage('window',frame)
+		frame = cv.QueryFrame(capture)
+		cv.ShowImage('window',frame)
 		
 
