@@ -14,7 +14,7 @@ def startCamera(resolutionX, resolutionY, vflip=False, hflip=False):
 	return camera
 
 #Take the (count)th picture and then returns an incremented count
-def takePicture(count=0, photoName='photo', photoExt='jpg', 
+def takePicture(camera, count=0, photoName='photo', photoExt='jpg', 
 	            prepMessage='',postMessage=''):
 	#Print the preparation message 
     print(prepMessage)
@@ -28,3 +28,7 @@ def takePicture(count=0, photoName='photo', photoExt='jpg',
 #Begin to show camera preview
 def startPreview(camera):
 	camera.start_preview()
+
+#Stop showing the camera preview
+def stopPreview(camera):
+	camera.stop_preview()
