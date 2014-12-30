@@ -30,6 +30,8 @@ def releaseCamera(camera):
 
 #To start a window preview
 def startPreview(camera):
+	#Set window to adjustable size
+	cv2.namedWindow('frame', cv2.cv.CV_WINDOW_NORMAL)
 	#Display video
 	while(True):
 		#Frame-by-frame capture
@@ -38,22 +40,11 @@ def startPreview(camera):
 		#Frame operations
 		# frame = cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
 
-		#Dispaly the frame\
+		#Dispaly the frame
 		cv2.imshow('frame',frame)
 
 		#To quit, press 'q'
 		if cv2.waitKey(1) & 0xFF == ord('q'):
 			break
 	#Destroy windows
-	cv2.dstroyAllWindows()
-
-#TEST window preview
-def startPreviewTest(camera):
-	import cv
-	cv.NamedWindow('window', cv2.cv.CV_WINDOW_AUTOSIZE)
-	capture = cv.CaptureFromCAM(0)
-	while(True):
-		frame = cv.QueryFrame(capture)
-		cv.ShowImage('window',frame)
-		
-
+	cv2.destroyAllWindows()		
