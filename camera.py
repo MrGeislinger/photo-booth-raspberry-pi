@@ -32,3 +32,11 @@ def startPreview(camera):
 #Stop showing the camera preview
 def stopPreview(camera):
 	camera.stop_preview()
+
+#Overlay variables
+OVERLAY_WAITING = "Push the Button to Start Taking Pictures"
+OVERLAY_PREP    = "Camera will take three pictures"
+OVERLAY_READY   = "Pose & Get Ready in:\n"
+OVERLAY_CAPTURE = "Smile! :)"
+OVERLAY_DONE    = "Check the Printer for Your Photos!"
+
