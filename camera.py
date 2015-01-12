@@ -2,7 +2,8 @@
 # RaspberryPi Camera       # 
 ############################
 import picamera
-from time import sleep
+from time import sleep, strftime, gmtime
+import subprocess
 
 #Start the PiCamera instance
 def startCamera(resolutionX, resolutionY, vflip=False, hflip=False):
@@ -36,21 +37,25 @@ def stopPreview(camera):
 #Overlay variables
 OVERLAY_WAITING = "Push the Button to Start Taking Pictures"
 OVERLAY_PREP    = "Camera Will Take 3 Pictures"
-OVERLAY_READY   = "Pose & Get Ready in:\n"
+OVERLAY_READY   = "Pose & Get Ready in: "
 OVERLAY_CAPTURE = "Smile! :)"
-OVERLAY_NEXT    = "Get Ready for the Next Photo"
-OVERLAY_DONE    = "Check the Printer for Your Photos!"
+OVERLAY_NEXT    = "Get Ready for the Next Photo..."
+OVERLAY_DONE    = "Your photos will later be on our website VictorPlusEmily.com! Don't forget to sign the guestbook!"
 
 #Run a procedure when signal to start the photo booth procedure
 def startPhotoBooth(camera):
 	#User pushes button, shows a different overlay
 	camera.annotate_text = OVERLAY_PREP
 	sleep(3)
+
+	#Make directory
+	dirName = strftime('%j-%H-%M-%S',gmtime())
+	subprocess.call(['mkdir',dirName])
 	#Take three photos
 	totalPhotos = 3
 	for photoNum in range(totalPhotos):
 		#Preparing to take picture
-		countdown = 3 #3 seconds to countdown from
+		countdown = 5 #5 seconds to countdown from
 		for i in range(countdown):
 			camera.annotate_text = OVERLAY_READY + str(countdown-i)
 			sleep(1)
@@ -60,8 +65,11 @@ def startPhotoBooth(camera):
 		sleep(captureTime) 
 		#Take picture
 		camera.annotate_text = '' #Remove annotation so it doesn't show in picture
-		takePicture(camera,count=photoNum)
+		camera.hflip = False
+		phName = dirName + '/photo'
+		takePicture(camera,count=photoNum,photoName=phName)
 		#Prepare for the next photo (if applicable)
+		camera.hflip = True
 		photoNum += 1
 		if photoNum < totalPhotos:
 			#Prepare for the next photo
@@ -69,8 +77,18 @@ def startPhotoBooth(camera):
 			nextWaitTime = 1 
 		else:
 			camera.annotate_text = OVERLAY_DONE
-			nextWaitTime = 5
+			#
+			subprocess.call(['montage', dirName+'/photo*', '-tile', '1x3', '-geometry','+3+0',
+                                         '-border', '+10+5', '-bordercolor', 'gray', '-resize', '300x400', #'500x900',
+                                          dirName+'/temp.jpg'])
+			subprocess.call(['montage', dirName+'/temp.jpg', dirName+'/temp.jpg', '-tile','2x1', 
+					 '-geometry','+20+0', dirName+'/final.jpg'])
+			#
+			nextWaitTime = 25
+			#
 		#Give a little break for the next step
+		#Print
+		#subprocess.call(['lp','-d', 'Canon_MP495_series',dirName+'/final.jpg'])
 		sleep(nextWaitTime)
 	#Reset the camera's overlay back
 	camera.annotate_text = OVERLAY_WAITING
